@@ -27,6 +27,23 @@ function addMouseEventListeners (events, options) {
     });
   }
 
+  if (options.clickImg) {
+    events.on('click', function (event) {
+      if (event.target.nodeName === 'IMG' && event.target.className !== 'preview-img') {
+        var previewImgEle = document.createElement('div');
+        previewImgEle.className = 'preview-img'
+        previewImgEle.style.backgroundImage = 'url('+event.target.src+')'
+        document.body.appendChild(previewImgEle);
+      }
+
+      if (event.target.className === 'preview-img') {
+        var previewEle = document.querySelector('.preview-img');
+        document.body.removeChild(previewEle);
+      }
+    });
+
+  }
+
   if (options.scroll !== false) {
     var scrollHandler = function (event) {
       if (event.wheelDeltaY > 0 || event.detail < 0) {
